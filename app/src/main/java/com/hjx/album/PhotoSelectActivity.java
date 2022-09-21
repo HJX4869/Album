@@ -2,9 +2,11 @@ package com.hjx.album;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.loader.app.LoaderManager;
 import androidx.loader.content.Loader;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
@@ -30,6 +32,7 @@ public class PhotoSelectActivity extends AppCompatActivity {
     private Context mContext;
 
     private LoaderManager.LoaderCallbacks<List<PhotoModel>> mPhotoLoadCallback = new LoaderManager.LoaderCallbacks<List<PhotoModel>>() {
+        @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
         @NonNull
         @Override
         public Loader<List<PhotoModel>> onCreateLoader(int id, @Nullable Bundle args) {
@@ -54,7 +57,10 @@ public class PhotoSelectActivity extends AppCompatActivity {
         setContentView(R.layout.activity_photo_select);
         mContext = this;
         mRecyclerView = findViewById(R.id.recycler_view);
-        mAdapter = new RecyclerViewAdapter();
+        mRecyclerView.setNestedScrollingEnabled(false);
+        mRecyclerView.setLayoutManager(new GridLayoutManager(this, 4));
+        mRecyclerView.setHasFixedSize(true);
+        mAdapter = new RecyclerViewAdapter(this);
         mRecyclerView.setAdapter(mAdapter);
         LoaderManager.getInstance(this).initLoader(1, null, mPhotoLoadCallback);
     }

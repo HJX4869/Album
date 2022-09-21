@@ -2,9 +2,11 @@ package com.hjx.album.adapter;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.os.Build;
 import android.provider.MediaStore;
 
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.loader.content.AsyncTaskLoader;
 
 import com.hjx.album.PhotoModel;
@@ -12,6 +14,7 @@ import com.hjx.album.PhotoModel;
 import java.util.ArrayList;
 import java.util.List;
 
+@RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
 public class PhotoLoad extends AsyncTaskLoader<List<PhotoModel>> {
 
     private static final String[] PHOTO_PROJECTION =
@@ -19,6 +22,7 @@ public class PhotoLoad extends AsyncTaskLoader<List<PhotoModel>> {
             MediaStore.Images.ImageColumns.WIDTH, MediaStore.Images.ImageColumns.HEIGHT};
 
 
+    private static final String DESC = " DESC";
 
     public PhotoLoad(Context context) {
         super(context);
@@ -57,7 +61,7 @@ public class PhotoLoad extends AsyncTaskLoader<List<PhotoModel>> {
         Cursor cursor = null;
         try {
             cursor = getContext().getContentResolver().query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-                PHOTO_PROJECTION, null, null, null);
+                PHOTO_PROJECTION, null, null, MediaStore.Images.Media._ID + DESC);
             if (cursor == null) {
                 return data;
             }

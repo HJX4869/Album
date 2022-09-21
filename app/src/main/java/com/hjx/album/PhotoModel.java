@@ -9,6 +9,22 @@ public class PhotoModel {
 
     private int mHeight;
 
+    public int getId() {
+        return mId;
+    }
+
+    public String getPath() {
+        return mPath;
+    }
+
+    public int getWidth() {
+        return mWidth;
+    }
+
+    public int getHeight() {
+        return mHeight;
+    }
+
     private PhotoModel(Builder builder) {
         mId = builder.id;
         mPath = builder.path;
