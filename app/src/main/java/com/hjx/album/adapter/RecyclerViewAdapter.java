@@ -1,9 +1,10 @@
 package com.hjx.album.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -34,6 +35,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         return new ViewHolder(view);
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         if (position < 0) {
@@ -43,7 +45,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             return;
         }
         Log.i("hjx",  mData.get(position).getPath());
-        Glide.with(mContext).load(mData.get(position).getPath()).into(((ViewHolder) holder).mImageView);
+        ImageView imageView = ((ViewHolder) holder).mImageView;
+        Glide.with(mContext).load(mData.get(position).getPath()).into(imageView);
     }
 
     @Override
@@ -54,15 +57,20 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         return mData.size();
     }
 
+    @Override
+    public void onViewRecycled(@NonNull RecyclerView.ViewHolder holder) {
+
+    }
+
     public void bindData(List<PhotoModel> data) {
         mData = data;
         notifyDataSetChanged();
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
-        public final ImageView mImageView;
+        final ImageView mImageView;
 
-        public ViewHolder(View view) {
+        ViewHolder(View view) {
             super(view);
             this.mImageView = view.findViewById(R.id.photo_view);
         }

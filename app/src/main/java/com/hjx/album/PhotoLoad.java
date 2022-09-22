@@ -1,4 +1,4 @@
-package com.hjx.album.adapter;
+package com.hjx.album;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -8,8 +8,6 @@ import android.provider.MediaStore;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.loader.content.AsyncTaskLoader;
-
-import com.hjx.album.PhotoModel;
 
 import java.util.ArrayList;
 import java.util.List;
